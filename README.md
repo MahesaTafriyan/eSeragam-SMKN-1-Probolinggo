@@ -34,7 +34,8 @@ Aplikasi ini adalah sistem manajemen pembelian seragam untuk siswa di SMKN 1 Pro
    ```bash
    http://127.0.0.1:5000
 
-##Penggunaan
+## Penggunaan
+
 Masuk sebagai admin untuk mengelola data siswa dan pembelian seragam.
 Gunakan formulir untuk menambah atau mengedit data siswa.
 Lihat data siswa dan pembelian yang telah dilakukan.
