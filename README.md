@@ -39,3 +39,8 @@ Aplikasi ini adalah sistem manajemen pembelian seragam untuk siswa di SMKN 1 Pro
 Masuk sebagai admin untuk mengelola data siswa dan pembelian seragam.
 Gunakan formulir untuk menambah atau mengedit data siswa.
 Lihat data siswa dan pembelian yang telah dilakukan.
+
+# eSeragam SMKN 1 Probolinggo
+
+![Logo eSeragam](./assets/Screenshot 2025-06-03 162810.png)
+
