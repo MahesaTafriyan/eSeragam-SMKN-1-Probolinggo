@@ -6,7 +6,6 @@ Aplikasi ini adalah sistem manajemen pembelian seragam untuk siswa di SMKN 1 Pro
 
 - **Login Admin**: Hanya admin yang dapat mengakses fitur manajemen data.
 - **Manajemen Data Siswa**: Tambah, edit, dan hapus data siswa.
-- **Pembelian Seragam**: Siswa dapat memilih seragam yang ingin dibeli.
 - **Format Uang**: Menampilkan harga dalam format mata uang Indonesia.
 
 ## Teknologi yang Digunakan
