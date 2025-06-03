@@ -8,15 +8,16 @@
     <style>
         body {
             background-color: #f8f9fa;
+            padding-bottom: 2rem;
         }
-        .card {
-            margin-bottom: 1rem;
+        .navbar {
+            margin-bottom: 2rem;
         }
         .form-section {
             background: white;
             padding: 2rem;
-            border-radius: 0.375rem;
-            box-shadow: 0 0.15rem 1.75rem rgba(58,59,69,.15);
+            border-radius: 0.5rem;
+            box-shadow: 0 0.2rem 1rem rgba(0,0,0,0.1);
             margin-bottom: 2rem;
         }
         .form-label {
@@ -26,30 +27,99 @@
             background-color: #0d6efd;
             color: white;
         }
-        .modal-footer button.btn.btn-primary {
-            min-width: 100px;
-        }
         .purchase-list > li {
             padding: 0.25rem 0;
+            border-bottom: 1px solid #eee;
         }
         .kelas-header {
             background-color: #0d6efd;
             color: white;
             padding: 0.75rem 1.25rem;
-            border-radius: 0.375rem 0.375rem 0 0;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s ease;
         }
-        .kelas-card {
-            border: 1px solid rgba(0,0,0,.125);
-            border-radius: 0.375rem;
-            margin-bottom: 2rem;
+        .kelas-header:hover {
+            background-color: #0b5ed7;
         }
-        .kelas-body {
-            padding: 1.25rem;
+        .kelas-toggle-icon {
+            transition: transform 0.3s ease;
         }
+        .kelas-header.collapsed .kelas-toggle-icon {
+            transform: rotate(-90deg);
+        }
+        .search-highlight {
+            background-color: #ffeb3b;
+            padding: 0 0.2rem;
+            border-radius: 0.2rem;
+        }
+        .student-count {
+            background-color: white;
+            color: #0d6efd;
+            padding: 0.2rem 0.5rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+        .empty-class {
+            color: #6c757d;
+            font-style: italic;
+            padding: 1rem;
+            text-align: center;
+        }
+        .student-card {
+            margin-bottom: 1rem;
+            box-shadow: 0 0.1rem 0.5rem rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+        }
+        .student-card:hover {
+            transform: translateY(-2px);
+        }
+        .student-count {
+        background-color: white;
+        color: #0d6efd;
+        padding: 0.2rem 0.5rem;
+        border-radius: 1rem;
+        font-size: 0.8rem;
+        margin-left: 0.5rem;
+        display: inline-block;
+        min-width: 30px;
+        text-align: center;
+        }
+        .kelas-nama {
+        display: inline-block;
+        min-width: 150px; /* bisa diatur sesuai kebutuhan */
+        }
+        .kelas-header {
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        border: 1px solid #dee2e6;
+        border-radius: 0.5rem;
+        margin-bottom: 0.5rem;
+        }
+
+        .student-count {
+            background-color: white;
+            color: #0d6efd;
+            padding: 0.2rem 0.6rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            min-width: 60px;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        
+
+
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a class="navbar-brand fw-bold" href="#">Pembelian Seragam</a>
             <div class="navbar-nav ms-auto">
@@ -67,7 +137,7 @@
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    <div class="alert alert-{{ category }} alert-dismissible fade show mt-3" role="alert">
                         {{ message }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
@@ -76,7 +146,7 @@
         {% endwith %}
 
         {% if is_admin %}
-        <section class="form-section mb-4">
+        <section class="form-section">
             <h2 class="mb-4">Formulir Pembelian Seragam</h2>
             <form action="/tambah" method="post" id="tambahForm">
                 <div class="row mb-3">
@@ -133,169 +203,197 @@
         <section>
             <h2 class="mb-4">Data Siswa</h2>
             <form action="/" method="get" class="mb-4">
-                <div class="input-group mb-4">
+                <div class="input-group">
                     <input type="text" name="search" class="form-control" 
-                           placeholder="Cari siswa berdasarkan nama" aria-label="Cari siswa"
-                           value="{{ search_query }}" />
-                    <input type="hidden" name="nama" value="{{ nama_query }}" />
-                    <input type="hidden" name="kelas" value="{{ kelas_query }}" />
-                    <input type="hidden" name="jenis_kelamin" value="{{ jenis_kelamin_terpilih }}" />
-                    <button class="btn btn-primary" type="submit">Cari</button>
+                           placeholder="Cari siswa berdasarkan nama" 
+                           value="{{ search_query }}"
+                           aria-label="Cari siswa">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="bi bi-search"></i> Cari
+                    </button>
+                    {% if search_query %}
+                    <a href="/" class="btn btn-outline-secondary">Reset</a>
+                    {% endif %}
                 </div>
+                <input type="hidden" name="jenis_kelamin" value="{{ jenis_kelamin_terpilih }}">
             </form>
 
             {% if siswa_per_kelas %}
-                {% for kelas in ordered_kelas %}
-                    {% set siswa_kelas = siswa_per_kelas[kelas] %}
-                    <div class="kelas-card">
-                        <div class="kelas-header">
-                            <h3 class="h5 mb-0">{{ kelas }}</h3>
-                        </div>
-                        <div class="kelas-body">
-                            <div class="row row-cols-1 row-cols-md-2 g-4">
-                                {% for siswa in siswa_kelas %}
-                                    <div class="col">
-                                        <div class="card shadow-sm">
-                                            <div class="card-header d-flex justify-content-between align-items-center">
-                                                <h5 class="card-title mb-0">{{ siswa.nama }}</h5>
-                                                <small class="text-muted">{{ siswa.jenis_kelamin }}</small>
-                                            </div>
-                                            <div class="card-body">
-                                                <ul class="purchase-list ps-3 mb-3">
-                                                    {% for item, details in siswa.pembelian.items() %}
-                                                        <li>
-                                                            {{ item }}: {{ details.jumlah }} &times; {{ details.harga_satuan | format_currency }} = {{ details.total | format_currency }}
-                                                        </li>
-                                                    {% endfor %}
-                                                </ul>
-                                                <p class="fw-semibold fs-5">Total Bayar: {{ siswa.total_bayar | format_currency }}</p>
-                                            </div>
-                                            {% if is_admin %}
-                                            <div class="card-footer d-flex justify-content-end gap-2">
-                                                <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editModal{{ loop.index0 }}">
-                                                    Edit
-                                                </button>
-                                                <form method="post" action="/hapus/{{ loop.index0 }}" onsubmit="return confirm('Hapus data ini?')">
-                                                    <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                                                </form>
-                                            </div>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-
-                                    <!-- Edit Modal for each student -->
-                                    <div class="modal fade" id="editModal{{ loop.index0 }}" tabindex="-1" aria-labelledby="editModalLabel{{ loop.index0 }}" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="editModalLabel{{ loop.index0 }}">Edit Data {{ siswa.nama }}</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="accordion" id="kelasAccordion">
+                    {% for kelas in ordered_kelas %}
+                        {% set siswa_kelas = siswa_per_kelas[kelas] %}
+                        <div class="mb-3">
+                            <div class="kelas-header collapsed" 
+                                data-bs-toggle="collapse" 
+                                data-bs-target="#kelas-{{ loop.index }}"
+                                aria-expanded="false"
+                                aria-controls="kelas-{{ loop.index }}">
+                                
+                                <div class="d-flex align-items-center justify-content-start gap-4">
+                                    <span class="kelas-nama">{{ kelas }}</span>
+                                    <span class="student-count">{{ siswa_kelas|length }} siswa</span>
+                                </div>
+                                
+                                <span class="kelas-toggle-icon">▼</span>
+                            </div>
+                            
+                            <div id="kelas-{{ loop.index }}" class="collapse" 
+                                 data-bs-parent="#kelasAccordion">
+                                <div class="mt-2">
+                                    {% if siswa_kelas %}
+                                        <div class="row row-cols-1 row-cols-md-2 g-3">
+                                            {% for siswa in siswa_kelas %}
+                                                <div class="col">
+                                                    <div class="card student-card">
+                                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                                            <h5 class="card-title mb-0">
+                                                                {% if search_query %}
+                                                                    {{ siswa.nama | replace(search_query, '<span class="search-highlight">' ~ search_query ~ '</span>') | safe }}
+                                                                {% else %}
+                                                                    {{ siswa.nama }}
+                                                                {% endif %}
+                                                            </h5>
+                                                            <small class="text-muted">{{ siswa.jenis_kelamin }}</small>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <ul class="purchase-list list-unstyled mb-3">
+                                                                {% for item, details in siswa.pembelian.items() %}
+                                                                    <li>
+                                                                        {{ item }}: 
+                                                                        {{ details.jumlah }} &times; {{ details.harga_satuan | format_currency }} 
+                                                                        = <strong>{{ details.total | format_currency }}</strong>
+                                                                    </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                            <p class="fw-bold text-end mb-0">
+                                                                Total: {{ siswa.total_bayar | format_currency }}
+                                                            </p>
+                                                        </div>
+                                                        {% if is_admin %}
+                                                        <div class="card-footer d-flex justify-content-end gap-2">
+                                                            <button class="btn btn-sm btn-primary" 
+                                                                    data-bs-toggle="modal" 
+                                                                    data-bs-target="#editModal-{{ loop.index0 }}">
+                                                                Edit
+                                                            </button>
+                                                            <form method="post" action="/hapus/{{ loop.index0 }}" 
+                                                                  onsubmit="return confirm('Apakah Anda yakin ingin menghapus data {{ siswa.nama }}?')">
+                                                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                                            </form>
+                                                        </div>
+                                                        {% endif %}
+                                                    </div>
                                                 </div>
-                                                <form action="/edit/{{ loop.index0 }}" method="post">
-                                                    <div class="modal-body">
-                                                        <div class="row mb-3">
-                                                            <label for="edit-nama-{{ loop.index0 }}" class="col-sm-2 col-form-label form-label">Nama</label>
-                                                            <div class="col-sm-10">
-                                                                <input type="text" name="nama" id="edit-nama-{{ loop.index0 }}" class="form-control" value="{{ siswa.nama }}" required />
-                                                            </div>
-                                                        </div>
-                                                        <div class="row mb-4">
-                                                            <label for="edit-kelas-{{ loop.index0 }}" class="col-sm-2 col-form-label form-label">Kelas</label>
-                                                            <div class="col-sm-10">
-                                                                <select name="kelas" id="edit-kelas-{{ loop.index0 }}" class="form-select" required>
-                                                                    {% for kelas_option in kelas_opsi %}
-                                                                        <option value="{{ kelas_option }}" {% if kelas_option == siswa.kelas %}selected{% endif %}>{{ kelas_option }}</option>
-                                                                    {% endfor %}
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row mb-4">
-                                                            <label for="edit-jenis_kelamin-{{ loop.index0 }}" class="col-sm-2 col-form-label form-label">Jenis Kelamin</label>
-                                                            <div class="col-sm-10">
-                                                                <select name="jenis_kelamin" id="edit-jenis_kelamin-{{ loop.index0 }}" class="form-select" required>
-                                                                    <option value="Laki-laki" {% if siswa.jenis_kelamin == 'Laki-laki' %}selected{% endif %}>Laki-laki</option>
-                                                                    <option value="Perempuan" {% if siswa.jenis_kelamin == 'Perempuan' %}selected{% endif %}>Perempuan</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
 
-                                                        <h4 class="mb-3">Barang</h4>
-                                                        <div class="row g-3">
-                                                            {% if siswa.jenis_kelamin == 'Perempuan' %}
-                                                                {% set items_to_show = barang_all %}
-                                                            {% else %}
-                                                                {% set items_to_show = barang_laki %}
-                                                            {% endif %}
-                                                            
-                                                            {% for item, harga in items_to_show.items() %}
-                                                                <div class="col-md-6 mb-4">
-                                                                    <label for="edit-item-{{ loop.index0 }}-{{ loop.index }}" class="form-label">{{ item }} ({{ harga | format_currency }})</label>
-                                                                    <input type="number" min="0" 
-                                                                           name="{{ item }}" 
-                                                                           class="form-control" 
-                                                                           id="edit-item-{{ loop.index0 }}-{{ loop.index }}" 
-                                                                           value="{{ siswa.pembelian[item].jumlah if item in siswa.pembelian else 0 }}" />
+                                                <!-- Edit Modal -->
+                                                <div class="modal fade" id="editModal-{{ loop.index0 }}" 
+                                                     tabindex="-1" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Edit Data {{ siswa.nama }}</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <form action="/edit/{{ loop.index0 }}" method="post">
+                                                                <div class="modal-body">
+                                                                    <div class="row mb-3">
+                                                                        <label class="col-sm-2 col-form-label">Nama</label>
+                                                                        <div class="col-sm-10">
+                                                                            <input type="text" name="nama" class="form-control" 
+                                                                                   value="{{ siswa.nama }}" required>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mb-3">
+                                                                        <label class="col-sm-2 col-form-label">Kelas</label>
+                                                                        <div class="col-sm-10">
+                                                                            <select name="kelas" class="form-select" required>
+                                                                                {% for kelas_option in kelas_opsi %}
+                                                                                    <option value="{{ kelas_option }}" 
+                                                                                            {% if kelas_option == siswa.kelas %}selected{% endif %}>
+                                                                                        {{ kelas_option }}
+                                                                                    </option>
+                                                                                {% endfor %}
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mb-4">
+                                                                        <label class="col-sm-2 col-form-label">Jenis Kelamin</label>
+                                                                        <div class="col-sm-10">
+                                                                            <select name="jenis_kelamin" class="form-select" required>
+                                                                                <option value="Laki-laki" {% if siswa.jenis_kelamin == 'Laki-laki' %}selected{% endif %}>Laki-laki</option>
+                                                                                <option value="Perempuan" {% if siswa.jenis_kelamin == 'Perempuan' %}selected{% endif %}>Perempuan</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <h5 class="mb-3">Barang</h5>
+                                                                    <div class="row g-3">
+                                                                        {% set items_to_show = barang_all if siswa.jenis_kelamin == 'Perempuan' else barang_laki %}
+                                                                        {% for item, harga in items_to_show.items() %}
+                                                                            <div class="col-md-6">
+                                                                                <label class="form-label">
+                                                                                    {{ item }} ({{ harga | format_currency }})
+                                                                                </label>
+                                                                                <input type="number" min="0" name="{{ item }}" 
+                                                                                       class="form-control" 
+                                                                                       value="{{ siswa.pembelian[item].jumlah if item in siswa.pembelian else 0 }}">
+                                                                            </div>
+                                                                        {% endfor %}
+                                                                    </div>
                                                                 </div>
-                                                            {% endfor %}
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                                                </div>
+                                                            </form>
                                                         </div>
                                                     </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                                                    </div>
-                                                </form>
-                                            </div>
+                                                </div>
+                                            {% endfor %}
                                         </div>
-                                    </div>
-                                {% endfor %}
+                                    {% else %}
+                                        <div class="empty-class">
+                                            Tidak ada siswa dalam kelas ini
+                                        </div>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             {% else %}
-                <div class="mb-4" style="min-height: 40px;"></div>
-                <p class="text-muted">Belum ada data siswa.</p>
+                <div class="alert alert-info">
+                    Belum ada data siswa. {% if is_admin %}Silakan tambahkan data melalui form di atas.{% endif %}
+                </div>
             {% endif %}
         </section>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Handle gender change in main form
-        document.getElementById('jenis_kelamin').addEventListener('change', function() {
-            const jenisKelamin = this.value;
-            const nama = document.getElementById('nama').value;
-            const kelas = document.getElementById('kelas').value;
-            const search = "{{ search_query }}";
-            
-            // Build URL with all necessary parameters
-            let url = `/?jenis_kelamin=${encodeURIComponent(jenisKelamin)}`;
-            
-            if (nama) {
-                url += `&nama=${encodeURIComponent(nama)}`;
+        // Auto expand classes with search results
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchQuery = "{{ search_query }}";
+            if (searchQuery) {
+                document.querySelectorAll('.search-highlight').forEach(highlight => {
+                    const collapse = highlight.closest('.collapse');
+                    if (collapse) {
+                        new bootstrap.Collapse(collapse, { show: true });
+                    }
+                });
             }
-            
-            if (kelas) {
-                url += `&kelas=${encodeURIComponent(kelas)}`;
-            }
-            
-            if (search) {
-                url += `&search=${encodeURIComponent(search)}`;
-            }
-            
-            window.location.href = url;
+
+            // Handle edit form gender change
+            document.querySelectorAll('[id^="edit-jenis_kelamin-"]').forEach(select => {
+                select.addEventListener('change', function() {
+                    this.form.submit();
+                });
+            });
         });
 
-        // Handle gender change in edit modals
-        document.querySelectorAll('[id^="edit-jenis_kelamin-"]').forEach(select => {
-            select.addEventListener('change', function() {
-                const modalId = this.id.split('-')[2];
-                const modal = document.getElementById(`editModal${modalId}`);
-                const form = modal.querySelector('form');
-                
-                // Submit the form to reload with correct gender items
-                form.submit();
-            });
+        // Handle main form gender change
+        document.getElementById('jenis_kelamin')?.addEventListener('change', function() {
+            this.form.submit();
         });
     </script>
 </body>
