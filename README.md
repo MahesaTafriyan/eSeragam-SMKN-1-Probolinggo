@@ -21,3 +21,20 @@ Aplikasi ini adalah sistem manajemen pembelian seragam untuk siswa di SMKN 1 Pro
 1. Clone repositori ini:
    ```bash
    git clone https://github.com/MahesaTafriyan/eSeragam-SMKN-1-Probolinggo.git
+2. Masuk ke direktori proyek:
+   ```bash
+   cd eSeragam-SMKN-1-Probolinggo
+3. Install dependensi yang diperlukan:
+   ```bash
+   pip install -r requirements.txt
+4. Jalankan aplikasi:
+   ```bash
+   python app.py
+5. Akses aplikasi di browser Anda:
+   ```bash
+   http://127.0.0.1:5000
+
+##Penggunaan
+Masuk sebagai admin untuk mengelola data siswa dan pembelian seragam.
+Gunakan formulir untuk menambah atau mengedit data siswa.
+Lihat data siswa dan pembelian yang telah dilakukan.
