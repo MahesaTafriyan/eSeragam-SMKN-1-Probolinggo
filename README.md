@@ -12,7 +12,7 @@ Aplikasi ini adalah sistem manajemen pembelian seragam untuk siswa di SMKN 1 Pro
 ## Teknologi yang Digunakan
 
 - **Flask**: Framework web untuk Python.
-- **SQLite**: Database ringan untuk menyimpan data.
+- **JSON**: Database ringan untuk menyimpan data.
 - **HTML/CSS**: Untuk tampilan antarmuka pengguna.
 - **Bootstrap**: Untuk styling dan responsivitas.
 
