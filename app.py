@@ -13,25 +13,25 @@ ADMIN_PASSWORD_HASH = generate_password_hash("admin123")  # Change this password
 
 # Barang untuk laki-laki
 barang_laki = {
-    "Kain Bawahan Hitam": 65000,
-    "Baju Seragam Khas": 85000,
     "Baju Seragam Abu-abu": 75000,
     "Baju Seragam Pramuka": 90000,
+    "Baju Seragam Khas": 85000,
     "Baju Seragam Olahraga": 80000,
-    "Topi Abu-Abu": 15000,
-    "Topi Merah": 15000,
+    "Kain Bawahan Hitam": 65000,
+    "Kain Bawahan Batik": 65000,
+    "Jas Almamater": 120000,
     "Dasi Hitam": 20000,
     "Dasi Abu-Abu": 20000,
-    "Bed Jurusan": 30000,
-    "Bed Bowolaksono": 30000,
-    "Bed Bendera": 30000,
-    "Bed Osis": 30000,
-    "Jas Almamater": 120000,
-    "Kaos Kaki Hitam": 10000,
-    "Kaos Kaki Putih": 10000,
+    "Topi Abu-Abu": 15000,
+    "Topi Merah": 15000,
     "Ikat Pinggang / Sabuk": 20000,
     "Nama Dada (ND)": 15000,
-    "Kain Bawahan Batik": 65000
+    "Bed Osis": 30000,
+    "Bed Jurusan": 30000,
+    "Bed Bendera": 30000,
+    "Bed Bowolaksono": 30000,
+    "Kaos Kaki Hitam": 10000,
+    "Kaos Kaki Putih": 10000
 }
 
 # Barang untuk perempuan
@@ -140,6 +140,7 @@ def index():
                         barang=barang_tampil,
                         barang_laki=barang_laki,
                         barang_perempuan=barang_perempuan,
+                        barang_all=barang_all,
                         kelas_opsi=kelas_opsi, 
                         data_siswa=filtered_data_siswa,
                         siswa_per_kelas=siswa_per_kelas,
