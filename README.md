@@ -40,7 +40,11 @@ Masuk sebagai admin untuk mengelola data siswa dan pembelian seragam.
 Gunakan formulir untuk menambah atau mengedit data siswa.
 Lihat data siswa dan pembelian yang telah dilakukan.
 
-# eSeragam SMKN 1 Probolinggo
+# Documentation
 
-![Logo eSeragam](./assets/Screenshot 2025-06-03 162810.png)
+![Image](https://github.com/user-attachments/assets/a10d7d54-6ac4-48d8-81cd-5a963d92b3d1)
+
+![Image](https://github.com/user-attachments/assets/64e3b99a-0d12-4abc-ba60-69150e05b147)
+
+![Image](https://github.com/user-attachments/assets/9a66a441-51d0-4830-a408-934c9fdf3d40)
 
