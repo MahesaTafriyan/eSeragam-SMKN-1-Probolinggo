@@ -1,3 +1,6 @@
+## Link Aplikasi
+🖥️ Live Demo: [https://e-seragam-smkn-1-probolinggo.vercel.app/](https://e-seragam-smkn-1-probolinggo.vercel.app/)
+
 # eSeragam-SMKN-1-Probolinggo
 
 Aplikasi ini adalah sistem manajemen pembelian seragam untuk siswa di SMKN 1 Probolinggo. Aplikasi ini dibangun menggunakan Flask dan JSON sebagai database.
