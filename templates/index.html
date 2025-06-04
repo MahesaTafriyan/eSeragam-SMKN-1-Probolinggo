@@ -1,18 +1,34 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Data Pembelian Seragam</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Pembelian Seragam Sekolah</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --success-color: #198754;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #0dcaf0;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --male-color: #0dcaf0;
+            --female-color: #ff6b9d;
+        }
+        
         body {
-            background-color: #f8f9fa;
-            padding-bottom: 2rem;
+            background-color: var(--light-color);
+            padding-bottom: 3rem;
         }
-        .navbar {
-            margin-bottom: 2rem;
+        
+        .navbar-brand {
+            font-weight: 700;
         }
+        
         .form-section {
             background: white;
             padding: 2rem;
@@ -20,19 +36,24 @@
             box-shadow: 0 0.2rem 1rem rgba(0,0,0,0.1);
             margin-bottom: 2rem;
         }
-        .form-label {
-            font-weight: 600;
+        
+        .card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: none;
         }
-        .modal-header {
-            background-color: #0d6efd;
-            color: white;
+        
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.1);
         }
-        .purchase-list > li {
-            padding: 0.25rem 0;
-            border-bottom: 1px solid #eee;
+        
+        .card-header {
+            background-color: rgba(var(--primary-color-rgb), 0.03);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
+        
         .kelas-header {
-            background-color: #0d6efd;
+            background-color: var(--primary-color);
             color: white;
             padding: 0.75rem 1.25rem;
             border-radius: 0.5rem;
@@ -43,101 +64,213 @@
             align-items: center;
             transition: all 0.2s ease;
         }
+        
         .kelas-header:hover {
             background-color: #0b5ed7;
         }
+        
         .kelas-toggle-icon {
             transition: transform 0.3s ease;
         }
+        
         .kelas-header.collapsed .kelas-toggle-icon {
             transform: rotate(-90deg);
         }
+        
         .search-highlight {
-            background-color: #ffeb3b;
+            background-color: var(--warning-color);
             padding: 0 0.2rem;
             border-radius: 0.2rem;
         }
+        
         .student-count {
             background-color: white;
-            color: #0d6efd;
-            padding: 0.2rem 0.5rem;
-            border-radius: 1rem;
-            font-size: 0.8rem;
-            margin-left: 0.5rem;
-        }
-        .empty-class {
-            color: #6c757d;
-            font-style: italic;
-            padding: 1rem;
-            text-align: center;
-        }
-        .student-card {
-            margin-bottom: 1rem;
-            box-shadow: 0 0.1rem 0.5rem rgba(0,0,0,0.05);
-            transition: transform 0.2s ease;
-        }
-        .student-card:hover {
-            transform: translateY(-2px);
-        }
-        .student-count {
-        background-color: white;
-        color: #0d6efd;
-        padding: 0.2rem 0.5rem;
-        border-radius: 1rem;
-        font-size: 0.8rem;
-        margin-left: 0.5rem;
-        display: inline-block;
-        min-width: 30px;
-        text-align: center;
-        }
-        .kelas-nama {
-        display: inline-block;
-        min-width: 150px; /* bisa diatur sesuai kebutuhan */
-        }
-        .kelas-header {
-        padding: 0.5rem 1rem;
-        cursor: pointer;
-        border: 1px solid #dee2e6;
-        border-radius: 0.5rem;
-        margin-bottom: 0.5rem;
-        }
-
-        .student-count {
-            background-color: white;
-            color: #0d6efd;
+            color: var(--primary-color);
             padding: 0.2rem 0.6rem;
             border-radius: 1rem;
             font-size: 0.8rem;
             min-width: 60px;
             text-align: center;
-            white-space: nowrap;
         }
-
         
-
-
+        .badge-gender {
+            font-size: 0.75rem;
+            padding: 0.35em 0.65em;
+            font-weight: 500;
+        }
+        
+        .badge-male {
+            background-color: var(--male-color);
+            color: white;
+        }
+        
+        .badge-female {
+            background-color: var(--female-color);
+            color: white;
+        }
+        
+        .purchase-item {
+            padding: 0.25rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .purchase-item:last-child {
+            border-bottom: none;
+        }
+        
+        .total-price {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .login-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
+        }
+        
+        .form-floating label {
+            padding: 1rem 0.75rem;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        /* Uppercase styling */
+        .form-select, .form-control, .input-group-text, 
+        .kelas-header, .card-title, .card-subtitle {
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        
+        .form-select option {
+            text-transform: uppercase;
+        }
+        
+        /* Improved item list styles */
+        .item-category {
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .item-group {
+            background-color: #f8f9fa;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .item-row {
+            margin-bottom: 0.5rem;
+            align-items: center;
+        }
+        
+        .item-label {
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+        
+        .item-price {
+            font-weight: 500;
+            color: var(--success-color);
+            text-align: right;
+        }
+        
+        .item-quantity {
+            max-width: 100px;
+        }
+        
+        /* Print-specific styles */
+        @media print {
+            .no-print, nav, footer, .card-footer, .form-section {
+                display: none !important;
+            }
+            
+            body {
+                background-color: white;
+                padding: 0;
+            }
+            
+            .card {
+                break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
+                margin-bottom: 1rem;
+            }
+            
+            .kelas-header {
+                background-color: white !important;
+                color: black !important;
+                border: 1px solid #ddd;
+            }
+            
+            .collapse {
+                display: block !important;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .form-section {
+                padding: 1.5rem;
+            }
+            
+            .kelas-header {
+                padding: 0.5rem 1rem;
+            }
+            
+            .item-row {
+                margin-bottom: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#">Pembelian Seragam</a>
-            <div class="navbar-nav ms-auto">
-                {% if is_admin %}
-                    <span class="navbar-text me-3">Admin</span>
-                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
-                {% else %}
-                    <a class="nav-link" href="{{ url_for('login') }}">Login Admin</a>
-                {% endif %}
+            <a class="navbar-brand fw-bold" href="{{ url_for('index') }}">
+                <i class="bi bi-shop me-2"></i>SISTEM SERAGAM SEKOLAH
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav ms-auto">
+                    {% if is_admin %}
+                        <span class="nav-item nav-link me-3">
+                            <i class="bi bi-person-fill-gear me-1"></i>ADMIN
+                        </span>
+                        <a class="nav-item nav-link" href="{{ url_for('logout') }}">
+                            <i class="bi bi-box-arrow-right me-1"></i>LOGOUT
+                        </a>
+                    {% else %}
+                        <a class="nav-item nav-link" href="{{ url_for('login') }}">
+                            <i class="bi bi-box-arrow-in-right me-1"></i>LOGIN ADMIN
+                        </a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </nav>
 
-    <main class="container">
+    <!-- Main Content -->
+    <main class="container my-4">
+        <!-- Flash Messages -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                    <div class="alert alert-{{ category }} alert-dismissible fade show mt-3" role="alert">
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
                         {{ message }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
@@ -145,234 +278,325 @@
             {% endif %}
         {% endwith %}
 
+        <!-- Admin Form Section -->
         {% if is_admin %}
         <section class="form-section">
-            <h2 class="mb-4">Formulir Pembelian Seragam</h2>
-            <form action="/tambah" method="post" id="tambahForm">
-                <div class="row mb-3">
-                    <label for="nama" class="col-sm-2 col-form-label form-label">Nama</label>
-                    <div class="col-sm-10">
-                        <input type="text" name="nama" id="nama" class="form-control" 
-                               placeholder="Masukkan nama siswa" required 
-                               value="{{ nama_query }}" />
-                    </div>
-                </div>
-                <div class="row mb-4">
-                    <label for="kelas" class="col-sm-2 col-form-label form-label">Kelas</label>
-                    <div class="col-sm-10">
-                        <select name="kelas" id="kelas" class="form-select" required>
-                            <option value="" disabled {% if not kelas_query %}selected{% endif %}>Pilih kelas</option>
-                            {% for kelas in kelas_opsi %}
-                                <option value="{{ kelas }}" {% if kelas_query == kelas %}selected{% endif %}>{{ kelas }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
-                <div class="row mb-4">
-                    <label for="jenis_kelamin" class="col-sm-2 col-form-label form-label">Jenis Kelamin</label>
-                    <div class="col-sm-10">
-                        <select name="jenis_kelamin" id="jenis_kelamin" class="form-select" required>
-                            <option value="" disabled {% if not jenis_kelamin_terpilih %}selected{% endif %}>Pilih jenis kelamin</option>
-                            <option value="Laki-laki" {% if jenis_kelamin_terpilih == 'Laki-laki' %}selected{% endif %}>Laki-laki</option>
-                            <option value="Perempuan" {% if jenis_kelamin_terpilih == 'Perempuan' %}selected{% endif %}>Perempuan</option>
-                        </select>
-                    </div>
-                </div>
-
-                <h4 class="mb-3">Barang</h4>
+            <h2 class="mb-4">
+                <i class="bi bi-plus-circle me-2"></i>FORMULIR PEMBELIAN SERAGAM
+            </h2>
+            <form action="{{ url_for('tambah_data') }}" method="post" id="tambahForm">
                 <div class="row g-3">
-                    {% for item, harga in barang.items() %}
-                        {% if jenis_kelamin_terpilih != 'Perempuan' and item in barang_perempuan %}
-                            {# Skip jilbab items if not female #}
-                        {% else %}
-                            <div class="col-md-6 mb-4">
-                                <label for="item-{{ loop.index }}" class="form-label">{{ item }} ({{ harga | format_currency }})</label>
-                                <input type="number" min="0" value="0" name="{{ item }}" class="form-control" id="item-{{ loop.index }}" />
-                            </div>
-                        {% endif %}
-                    {% endfor %}
+                    <!-- Student Info -->
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="nama" name="nama" 
+                                   placeholder="Nama Siswa" required value="{{ nama_query }}">
+                            <label for="nama"><i class="bi bi-person me-2"></i>NAMA SISWA</label>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            <select name="kelas" id="kelas" class="form-select" required>
+                                <option value="" disabled selected>PILIH KELAS</option>
+                                {% for kelas in kelas_opsi %}
+                                    <option value="{{ kelas }}" {% if kelas_query == kelas %}selected{% endif %}>{{ kelas }}</option>
+                                {% endfor %}
+                            </select>
+                            <label for="kelas"><i class="bi bi-building me-2"></i>KELAS</label>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            <select name="jenis_kelamin" id="jenis_kelamin" class="form-select" required>
+                                <option value="" disabled selected>PILIH JENIS KELAMIN</option>
+                                <option value="Laki-laki" {% if jenis_kelamin_terpilih == 'Laki-laki' %}selected{% endif %}>LAKI-LAKI</option>
+                                <option value="Perempuan" {% if jenis_kelamin_terpilih == 'Perempuan' %}selected{% endif %}>PEREMPUAN</option>
+                            </select>
+                            <label for="jenis_kelamin"><i class="bi bi-gender-ambiguous me-2"></i>JENIS KELAMIN</label>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="mt-4">
-                    <button type="submit" class="btn btn-success px-4">Tambah Data</button>
+                <!-- Items Section -->
+                <h4 class="mt-4 mb-3">
+                    <i class="bi bi-cart me-2"></i>DAFTAR BARANG
+                </h4>
+                
+                <!-- Male/All Items -->
+                <div class="item-group">
+                    <h5 class="item-category">SERAGAM ATAS</h5>
+                    <div class="row g-3">
+                        {% for item, harga in barang.items() %}
+                            {% if item in ['Baju Seragam Abu-abu', 'Baju Seragam Pramuka', 'Baju Seragam Khas', 'Baju Seragam Olahraga'] %}
+                                <div class="col-md-4 col-sm-6 item-row">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="item-label">{{ item }}</span>
+                                        <span class="item-price">{{ harga|format_currency }}</span>
+                                    </div>
+                                    <input type="number" min="0" value="0" name="{{ item }}" 
+                                           class="form-control item-quantity mt-1" placeholder="Jumlah">
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="item-group">
+                    <h5 class="item-category">SERAGAM BAWAH</h5>
+                    <div class="row g-3">
+                        {% for item, harga in barang.items() %}
+                            {% if item in ['Kain Bawahan Hitam', 'Kain Bawahan Batik'] %}
+                                <div class="col-md-4 col-sm-6 item-row">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="item-label">{{ item }}</span>
+                                        <span class="item-price">{{ harga|format_currency }}</span>
+                                    </div>
+                                    <input type="number" min="0" value="0" name="{{ item }}" 
+                                           class="form-control item-quantity mt-1" placeholder="Jumlah">
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="item-group">
+                    <h5 class="item-category">ATRIBUT SERAGAM</h5>
+                    <div class="row g-3">
+                        {% for item, harga in barang.items() %}
+                            {% if item in ['Jas Almamater', 'Dasi Hitam', 'Dasi Abu-Abu', 'Topi Abu-Abu', 'Topi Merah', 'Ikat Pinggang / Sabuk'] %}
+                                <div class="col-md-4 col-sm-6 item-row">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="item-label">{{ item }}</span>
+                                        <span class="item-price">{{ harga|format_currency }}</span>
+                                    </div>
+                                    <input type="number" min="0" value="0" name="{{ item }}" 
+                                           class="form-control item-quantity mt-1" placeholder="Jumlah">
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="item-group">
+                    <h5 class="item-category">ATRIBUT TAMBAHAN</h5>
+                    <div class="row g-3">
+                        {% for item, harga in barang.items() %}
+                            {% if item in ['Nama Dada (ND)', 'Bed Osis', 'Bed Jurusan', 'Bed Bendera', 'Bed Bowolaksono', 'Kaos Kaki Hitam', 'Kaos Kaki Putih'] %}
+                                <div class="col-md-4 col-sm-6 item-row">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="item-label">{{ item }}</span>
+                                        <span class="item-price">{{ harga|format_currency }}</span>
+                                    </div>
+                                    <input type="number" min="0" value="0" name="{{ item }}" 
+                                           class="form-control item-quantity mt-1" placeholder="Jumlah">
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Female-specific items -->
+                <div class="item-group" id="femaleItems" {% if jenis_kelamin_terpilih != 'Perempuan' %}style="display: none;"{% endif %}>
+                    <h5 class="item-category">KHUSUS PEREMPUAN</h5>
+                    <div class="row g-3">
+                        {% for item, harga in barang.items() %}
+                            {% if item in ['Jilbab Putih', 'Jilbab Coklat', 'Jilbab Batik', 'Jilbab Khas', 'Jilbab Hitam'] %}
+                                <div class="col-md-4 col-sm-6 item-row">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="item-label">{{ item }}</span>
+                                        <span class="item-price">{{ harga|format_currency }}</span>
+                                    </div>
+                                    <input type="number" min="0" value="0" name="{{ item }}" 
+                                           class="form-control item-quantity mt-1" placeholder="Jumlah">
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                    <button type="submit" class="btn btn-success px-4">
+                        <i class="bi bi-save me-2"></i>SIMPAN DATA
+                    </button>
                 </div>
             </form>
         </section>
         {% endif %}
 
+        <!-- Student Data Section -->
         <section>
-            <h2 class="mb-4">Data Siswa</h2>
-            <form action="/" method="get" class="mb-4">
-                <div class="input-group">
-                    <input type="text" name="search" class="form-control" 
-                           placeholder="Cari siswa berdasarkan nama" 
-                           value="{{ search_query }}"
-                           aria-label="Cari siswa">
-                    <button class="btn btn-primary" type="submit">
-                        <i class="bi bi-search"></i> Cari
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0">
+                    <i class="bi bi-people-fill me-2"></i>DATA SISWA
+                </h2>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-primary no-print" type="button" data-bs-toggle="collapse" 
+                            data-bs-target="#filterCollapse" aria-expanded="false">
+                        <i class="bi bi-funnel"></i> FILTER
                     </button>
-                    {% if search_query %}
-                    <a href="/" class="btn btn-outline-secondary">Reset</a>
-                    {% endif %}
+                    <button class="btn btn-outline-secondary no-print" onclick="window.print()">
+                        <i class="bi bi-printer"></i> CETAK
+                    </button>
                 </div>
-                <input type="hidden" name="jenis_kelamin" value="{{ jenis_kelamin_terpilih }}">
-            </form>
+            </div>
 
+            <!-- Filter Collapse -->
+            <div class="collapse mb-4 no-print" id="filterCollapse">
+                <div class="card card-body">
+                    <form action="{{ url_for('index') }}" method="get" class="row g-3">
+                        <div class="col-md-4">
+                            <label for="searchInput" class="form-label">CARI NAMA</label>
+                            <input type="text" id="searchInput" name="search" class="form-control" 
+                                   placeholder="CARI SISWA..." value="{{ search_query }}">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="genderSelect" class="form-label">JENIS KELAMIN</label>
+                            <select id="genderSelect" name="jenis_kelamin" class="form-select">
+                                <option value="">SEMUA</option>
+                                <option value="Laki-laki" {% if jenis_kelamin_terpilih == 'Laki-laki' %}selected{% endif %}>LAKI-LAKI</option>
+                                <option value="Perempuan" {% if jenis_kelamin_terpilih == 'Perempuan' %}selected{% endif %}>PEREMPUAN</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="classSelect" class="form-label">KELAS</label>
+                            <select id="classSelect" name="kelas" class="form-select">
+                                <option value="">SEMUA KELAS</option>
+                                {% for kelas in kelas_opsi %}
+                                    <option value="{{ kelas }}" {% if kelas_query == kelas %}selected{% endif %}>{{ kelas }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="bi bi-search"></i> TERAPKAN
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Student List -->
             {% if siswa_per_kelas %}
                 <div class="accordion" id="kelasAccordion">
                     {% for kelas in ordered_kelas %}
-                        {% set siswa_kelas = siswa_per_kelas[kelas] %}
-                        <div class="mb-3">
-                            <div class="kelas-header collapsed" 
-                                data-bs-toggle="collapse" 
-                                data-bs-target="#kelas-{{ loop.index }}"
-                                aria-expanded="false"
-                                aria-controls="kelas-{{ loop.index }}">
-                                
-                                <div class="d-flex align-items-center justify-content-start gap-4">
-                                    <span class="kelas-nama">{{ kelas }}</span>
-                                    <span class="student-count">{{ siswa_kelas|length }} siswa</span>
+                        {% if kelas in siswa_per_kelas %}
+                            {% set siswa_kelas = siswa_per_kelas[kelas] %}
+                            <div class="mb-3">
+                                <!-- Class Header -->
+                                <div class="kelas-header collapsed" 
+                                     data-bs-toggle="collapse" 
+                                     data-bs-target="#kelas-{{ loop.index }}"
+                                     aria-expanded="false">
+                                    
+                                    <div class="d-flex align-items-center">
+                                        <span class="fw-bold">{{ kelas }}</span>
+                                        <span class="student-count ms-3">{{ siswa_kelas|length }} SISWA</span>
+                                    </div>
+                                    
+                                    <span class="kelas-toggle-icon">▼</span>
                                 </div>
                                 
-                                <span class="kelas-toggle-icon">▼</span>
-                            </div>
-                            
-                            <div id="kelas-{{ loop.index }}" class="collapse" 
-                                 data-bs-parent="#kelasAccordion">
-                                <div class="mt-2">
-                                    {% if siswa_kelas %}
-                                        <div class="row row-cols-1 row-cols-md-2 g-3">
-                                            {% for siswa in siswa_kelas %}
-                                                <div class="col">
-                                                    <div class="card student-card">
-                                                        <div class="card-header d-flex justify-content-between align-items-center">
-                                                            <h5 class="card-title mb-0">
-                                                                {% if search_query %}
-                                                                    {{ siswa.nama | replace(search_query, '<span class="search-highlight">' ~ search_query ~ '</span>') | safe }}
-                                                                {% else %}
-                                                                    {{ siswa.nama }}
-                                                                {% endif %}
-                                                            </h5>
-                                                            <small class="text-muted">{{ siswa.jenis_kelamin }}</small>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <ul class="purchase-list list-unstyled mb-3">
-                                                                {% for item, details in siswa.pembelian.items() %}
-                                                                    <li>
-                                                                        {{ item }}: 
-                                                                        {{ details.jumlah }} &times; {{ details.harga_satuan | format_currency }} 
-                                                                        = <strong>{{ details.total | format_currency }}</strong>
-                                                                    </li>
-                                                                {% endfor %}
-                                                            </ul>
-                                                            <p class="fw-bold text-end mb-0">
-                                                                Total: {{ siswa.total_bayar | format_currency }}
-                                                            </p>
-                                                        </div>
-                                                        {% if is_admin %}
-                                                        <div class="card-footer d-flex justify-content-end gap-2">
-                                                            <button class="btn btn-sm btn-primary" 
-                                                                    data-bs-toggle="modal" 
-                                                                    data-bs-target="#editModal-{{ loop.index0 }}">
-                                                                Edit
-                                                            </button>
-                                                            <form method="post" action="/hapus/{{ loop.index0 }}" 
-                                                                  onsubmit="return confirm('Apakah Anda yakin ingin menghapus data {{ siswa.nama }}?')">
-                                                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                                                            </form>
-                                                        </div>
-                                                        {% endif %}
-                                                    </div>
-                                                </div>
-
-                                                <!-- Edit Modal -->
-                                                <div class="modal fade" id="editModal-{{ loop.index0 }}" 
-                                                     tabindex="-1" aria-hidden="true">
-                                                    <div class="modal-dialog modal-lg">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title">Edit Data {{ siswa.nama }}</h5>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <!-- Class Content -->
+                                <div id="kelas-{{ loop.index }}" class="collapse" data-bs-parent="#kelasAccordion">
+                                    <div class="mt-2">
+                                        {% if siswa_kelas %}
+                                            <div class="row row-cols-1 row-cols-md-2 g-3">
+                                                {% for siswa in siswa_kelas %}
+                                                    <div class="col">
+                                                        <div class="card h-100">
+                                                            <div class="card-header d-flex justify-content-between align-items-center">
+                                                                <h5 class="card-title mb-0">
+                                                                    {% if search_query %}
+                                                                        {{ siswa.nama | replace(search_query, '<span class="search-highlight">' ~ search_query ~ '</span>') | safe }}
+                                                                    {% else %}
+                                                                        {{ siswa.nama }}
+                                                                    {% endif %}
+                                                                </h5>
+                                                                <span class="badge {% if siswa.jenis_kelamin == 'Laki-laki' %}badge-male{% else %}badge-female{% endif %} badge-gender">
+                                                                    {{ siswa.jenis_kelamin }}
+                                                                </span>
                                                             </div>
-                                                            <form action="/edit/{{ loop.index0 }}" method="post">
-                                                                <div class="modal-body">
-                                                                    <div class="row mb-3">
-                                                                        <label class="col-sm-2 col-form-label">Nama</label>
-                                                                        <div class="col-sm-10">
-                                                                            <input type="text" name="nama" class="form-control" 
-                                                                                   value="{{ siswa.nama }}" required>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row mb-3">
-                                                                        <label class="col-sm-2 col-form-label">Kelas</label>
-                                                                        <div class="col-sm-10">
-                                                                            <select name="kelas" class="form-select" required>
-                                                                                {% for kelas_option in kelas_opsi %}
-                                                                                    <option value="{{ kelas_option }}" 
-                                                                                            {% if kelas_option == siswa.kelas %}selected{% endif %}>
-                                                                                        {{ kelas_option }}
-                                                                                    </option>
-                                                                                {% endfor %}
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row mb-4">
-                                                                        <label class="col-sm-2 col-form-label">Jenis Kelamin</label>
-                                                                        <div class="col-sm-10">
-                                                                            <select name="jenis_kelamin" class="form-select" required>
-                                                                                <option value="Laki-laki" {% if siswa.jenis_kelamin == 'Laki-laki' %}selected{% endif %}>Laki-laki</option>
-                                                                                <option value="Perempuan" {% if siswa.jenis_kelamin == 'Perempuan' %}selected{% endif %}>Perempuan</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <h5 class="mb-3">Barang</h5>
-                                                                    <div class="row g-3">
-                                                                        {% set items_to_show = barang_all if siswa.jenis_kelamin == 'Perempuan' else barang_laki %}
-                                                                        {% for item, harga in items_to_show.items() %}
-                                                                            <div class="col-md-6">
-                                                                                <label class="form-label">
-                                                                                    {{ item }} ({{ harga | format_currency }})
-                                                                                </label>
-                                                                                <input type="number" min="0" name="{{ item }}" 
-                                                                                       class="form-control" 
-                                                                                       value="{{ siswa.pembelian[item].jumlah if item in siswa.pembelian else 0 }}">
-                                                                            </div>
-                                                                        {% endfor %}
-                                                                    </div>
+                                                            <div class="card-body">
+                                                                <h6 class="card-subtitle mb-3 text-muted">
+                                                                    KELAS: {{ siswa.kelas }}
+                                                                </h6>
+                                                                
+                                                                <ul class="list-unstyled mb-3">
+                                                                    {% for item, details in siswa.pembelian.items() %}
+                                                                        <li class="purchase-item">
+                                                                            <span>
+                                                                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                                                                {{ item }}
+                                                                            </span>
+                                                                            <span>
+                                                                                {{ details.jumlah }} × {{ details.harga_satuan|format_currency }}
+                                                                            </span>
+                                                                        </li>
+                                                                    {% endfor %}
+                                                                </ul>
+                                                                
+                                                                <div class="d-flex justify-content-between align-items-center border-top pt-2">
+                                                                    <small class="text-muted">ID: {{ siswa.id }}</small>
+                                                                    <h5 class="total-price mb-0">
+                                                                        TOTAL: {{ siswa.total_bayar|format_currency }}
+                                                                    </h5>
                                                                 </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                                            </div>
+                                                            {% if is_admin %}
+                                                            <div class="card-footer bg-transparent no-print">
+                                                                <div class="action-buttons">
+                                                                    <a href="{{ url_for('edit_data', student_id=siswa.id) }}" 
+                                                                       class="btn btn-sm btn-primary">
+                                                                        <i class="bi bi-pencil"></i> EDIT
+                                                                    </a>
+                                                                    <form method="post" action="{{ url_for('hapus_data', student_id=siswa.id) }}" 
+                                                                          onsubmit="return confirm('Apakah Anda yakin ingin menghapus data {{ siswa.nama }}?')">
+                                                                        <button type="submit" class="btn btn-sm btn-danger">
+                                                                            <i class="bi bi-trash"></i> HAPUS
+                                                                        </button>
+                                                                    </form>
                                                                 </div>
-                                                            </form>
+                                                            </div>
+                                                            {% endif %}
                                                         </div>
                                                     </div>
-                                                </div>
-                                            {% endfor %}
-                                        </div>
-                                    {% else %}
-                                        <div class="empty-class">
-                                            Tidak ada siswa dalam kelas ini
-                                        </div>
-                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            <div class="alert alert-info mb-0">
+                                                <i class="bi bi-info-circle"></i> TIDAK ADA SISWA DALAM KELAS INI
+                                            </div>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
             {% else %}
                 <div class="alert alert-info">
-                    Belum ada data siswa. {% if is_admin %}Silakan tambahkan data melalui form di atas.{% endif %}
+                    <i class="bi bi-info-circle"></i> BELUM ADA DATA SISWA. 
+                    {% if is_admin %}SILAKAN TAMBAHKAN DATA MELALUI FORM DI ATAS.{% endif %}
                 </div>
             {% endif %}
         </section>
     </main>
 
+    <!-- Footer -->
+    <footer class="bg-light py-3 mt-5 border-top no-print">
+        <div class="container text-center text-muted">
+            <small>SISTEM PEMBELIAN SERAGAM SEKOLAH &copy; {{ current_year }}</small>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Auto expand classes with search results
         document.addEventListener('DOMContentLoaded', function() {
+            // Auto expand classes with search results
             const searchQuery = "{{ search_query }}";
             if (searchQuery) {
                 document.querySelectorAll('.search-highlight').forEach(highlight => {
@@ -383,17 +607,43 @@
                 });
             }
 
-            // Handle edit form gender change
-            document.querySelectorAll('[id^="edit-jenis_kelamin-"]').forEach(select => {
-                select.addEventListener('change', function() {
-                    this.form.submit();
+            // Handle gender change to show/hide female-specific items
+            const genderSelect = document.getElementById('jenis_kelamin');
+            const femaleItems = document.getElementById('femaleItems');
+            
+            if (genderSelect && femaleItems) {
+                genderSelect.addEventListener('change', function() {
+                    if (this.value === 'Perempuan') {
+                        femaleItems.style.display = 'block';
+                    } else {
+                        femaleItems.style.display = 'none';
+                        // Reset quantities for female items
+                        femaleItems.querySelectorAll('input[type="number"]').forEach(input => {
+                            input.value = 0;
+                        });
+                    }
                 });
-            });
-        });
+            }
 
-        // Handle main form gender change
-        document.getElementById('jenis_kelamin')?.addEventListener('change', function() {
-            this.form.submit();
+            // Form validation - ensure at least one item is selected
+            const tambahForm = document.getElementById('tambahForm');
+            if (tambahForm) {
+                tambahForm.addEventListener('submit', function(e) {
+                    const quantityInputs = this.querySelectorAll('input[type="number"]');
+                    let hasQuantity = false;
+                    
+                    quantityInputs.forEach(input => {
+                        if (parseInt(input.value) > 0) {
+                            hasQuantity = true;
+                        }
+                    });
+                    
+                    if (!hasQuantity) {
+                        e.preventDefault();
+                        alert('Minimal pilih 1 barang');
+                    }
+                });
+            }
         });
     </script>
 </body>
