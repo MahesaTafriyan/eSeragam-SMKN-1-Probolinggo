@@ -3,34 +3,337 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Admin</title>
+    <title>LOGIN ADMINISTRATOR | Perpustakaan SMKN 1 Probolinggo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+        }
+        
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://f.top4top.io/p_3441iy1w71.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: var(--light-color);
+            padding: 20px 0;
+        }
+        
+        .main-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .login-container {
+            max-width: 450px;
+            margin: 40px auto;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        @media (min-width: 992px) {
+            .login-container {
+                margin: 80px auto 40px;
+            }
+        }
+        
+        .login-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 35px;
+            color: white;
+        }
+        
+        .login-header h2 {
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .login-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: white;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        /* Improved Form Input Styles */
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group-text {
+            background-color: white !important;
+            border-right: none !important;
+            padding: 0.75rem 1rem;
+            border-radius: 8px 0 0 8px !important;
+        }
+        
+        .form-control {
+            background-color: white !important;
+            border-left: none !important;
+            padding: 0.75rem 1rem;
+            height: auto;
+            border-radius: 0 8px 8px 0 !important;
+        }
+        
+        .form-control:focus {
+            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+            border-color: #86b7fe;
+        }
+        
+        .password-toggle {
+            background-color: white !important;
+            border-left: none !important;
+            border-color: #ced4da;
+            padding: 0 1rem;
+            border-radius: 0 8px 8px 0 !important;
+        }
+        
+        .password-toggle:hover {
+            background-color: #f8f9fa !important;
+        }
+        
+        /* Consistent input heights */
+        .input-group-text, 
+        .form-control,
+        .password-toggle {
+            height: 48px;
+            line-height: 1.5;
+        }
+        
+        .login-btn {
+            width: 100%;
+            margin-top: 10px;
+            padding: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            border: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .school-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            display: block;
+            border-radius: 50%;
+            border: 3px solid white;
+            object-fit: cover;
+            background-color: white;
+            padding: 5px;
+        }
+        
+        .error-message {
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 30px;
+                margin: 30px auto;
+            }
+            
+            .login-header h2 {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            body {
+                padding: 15px 0;
+            }
+            
+            .login-container {
+                padding: 25px 20px;
+                margin: 20px auto;
+            }
+            
+            .login-header h2 {
+                font-size: 1.3rem;
+            }
+            
+            .login-header p {
+                font-size: 1rem;
+            }
+            
+            .form-control {
+                padding: 10px 12px;
+            }
+            
+            .login-btn {
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
-<body class="bg-light">
-    <div class="container">
-        <div class="row justify-content-center mt-5">
-            <div class="col-md-6 col-lg-4">
-                <div class="card shadow">
-                    <div class="card-header bg-primary text-white text-center">
-                        <h3>Login Admin</h3>
-                    </div>
-                    <div class="card-body">
-                        <form method="POST" action="{{ url_for('login') }}">
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="username" name="username" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100">Login</button>
-                        </form>
-                    </div>
-                </div>
+<body>
+    <div class="main-container">
+        <div class="login-container animate__animated animate__fadeIn">
+            <div class="login-header">
+                <img src="https://f.top4top.io/p_344150vop1.gif" alt="School Logo" class="school-logo">
+                <h2>LOGIN ADMINISTRATOR</h2>
+                <p>Aplikasi eSeragam SMKN 1 Probolinggo</p>
             </div>
+            
+            <form method="POST" action="{{ url_for('login') }}" id="loginForm">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan username" value="admin" required>
+                    </div>
+                    <div class="error-message" id="username-error"></div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan password" required>
+                        <button type="button" class="btn btn-outline-secondary password-toggle" id="togglePassword">
+                            <i class="far fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="error-message" id="password-error"></div>
+                </div>
+                
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe" style="color: white;">
+                            Ingat saya
+                        </label>
+                    </div>
+                    <a href="#" style="color: var(--light-color); text-decoration: none;">Lupa password?</a>
+                </div>
+                
+                <button type="submit" class="btn btn-primary login-btn">
+                    <i class="fas fa-sign-in-alt"></i> LOGIN
+                </button>
+            </form>
+        </div>
+        
+        <div class="footer">
+            <p>Sistem Informasi eSeragam Digital</p>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 SMKN 1 Probolinggo | All Rights Reserved</p>
+            <p>Versi 2.1.0</p>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Password toggle functionality
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const password = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (password.type === 'password') {
+                password.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                password.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+        
+        // Form validation
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            let isValid = true;
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            
+            // Clear previous errors
+            document.getElementById('username-error').style.display = 'none';
+            document.getElementById('password-error').style.display = 'none';
+            
+            // Username validation
+            if (username.length < 4) {
+                document.getElementById('username-error').textContent = 'Username harus minimal 4 karakter';
+                document.getElementById('username-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Password validation
+            if (password.length < 6) {
+                document.getElementById('password-error').textContent = 'Password harus minimal 6 karakter';
+                document.getElementById('password-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            if (!isValid) {
+                e.preventDefault();
+                // Add shake animation to form
+                document.querySelector('.login-container').classList.add('animate__animated', 'animate__headShake');
+                setTimeout(() => {
+                    document.querySelector('.login-container').classList.remove('animate__animated', 'animate__headShake');
+                }, 1000);
+            }
+        });
+        
+        // Auto focus on username field when page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('username').focus();
+        });
+    </script>
 </body>
 </html>
