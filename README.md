@@ -51,9 +51,11 @@ Lihat data siswa dan pembelian yang telah dilakukan.
 
 # Documentation
 
-![Image](https://github.com/user-attachments/assets/a10d7d54-6ac4-48d8-81cd-5a963d92b3d1)
+![Image](https://github.com/user-attachments/assets/3e648783-134d-40ad-85ff-84a8dbf03ed7)
 
-![Image](https://github.com/user-attachments/assets/64e3b99a-0d12-4abc-ba60-69150e05b147)
+![Image](https://github.com/user-attachments/assets/b63b4e10-c89e-4bec-900f-c85227db74e5)
 
-![Image](https://github.com/user-attachments/assets/9a66a441-51d0-4830-a408-934c9fdf3d40)
+![Image](https://github.com/user-attachments/assets/a554e47e-b3b2-4b32-b38f-7be2bb351aa2)
+
+![Image](https://github.com/user-attachments/assets/4dab1e61-0759-4428-9bd5-02af4de8a994)
 
