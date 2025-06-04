@@ -1,6 +1,6 @@
 # eSeragam-SMKN-1-Probolinggo
 
-Aplikasi ini adalah sistem manajemen pembelian seragam untuk siswa di SMKN 1 Probolinggo. Aplikasi ini dibangun menggunakan Flask dan SQLite sebagai database.
+Aplikasi ini adalah sistem manajemen pembelian seragam untuk siswa di SMKN 1 Probolinggo. Aplikasi ini dibangun menggunakan Flask dan JSON sebagai database.
 
 ## Fitur
 
