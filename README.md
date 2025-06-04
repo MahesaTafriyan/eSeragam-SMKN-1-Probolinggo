@@ -1,4 +1,4 @@
-## Link Aplikasi
+## Link Web Aplikasi
 🖥️ Live Demo: [https://e-seragam-smkn-1-probolinggo.vercel.app/](https://e-seragam-smkn-1-probolinggo.vercel.app/)
 
 # eSeragam-SMKN-1-Probolinggo
