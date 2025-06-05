@@ -1,7 +1,0 @@
-services:
-  - type: web
-    name: school-uniform-app
-    env: python
-    buildCommand: ""
-    startCommand: "python app.py"
-    autoDeploy: true
